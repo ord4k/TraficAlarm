@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Component
 public class ScreenShotService {
 
-	private WebDriver driver = new ChromeDriver();
+	private WebDriver driver;
 	private String url = null;
 	private String screenDir;
 
@@ -36,6 +36,7 @@ public class ScreenShotService {
 	}
 
 	public void getWeb() {
+		driver = new ChromeDriver();
 		if (url != null) {
 			driver.get(url);
 
