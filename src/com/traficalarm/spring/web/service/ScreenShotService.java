@@ -6,9 +6,11 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-
+@Component
 public class ScreenShotService {
 
 	private WebDriver driver = new ChromeDriver();
@@ -40,7 +42,7 @@ public class ScreenShotService {
 			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 			try {
 				if (screenDir == null) {
-					screenDir = "\\resources\\tmp";
+					screenDir = "c:\\screen.jpg";
 				}
 				FileUtils.copyFile(scrFile, new File(screenDir));
 
@@ -50,7 +52,7 @@ public class ScreenShotService {
 			}
 			driver.close();
 			System.out.println("The website has been closed");
-			System.out.println("Screen shot has been saved in: ");
+			System.out.println("Screen shot has been saved in: " + screenDir);
 		} else {
 			System.out.println("First set the url for website you want to access!!");
 		}
