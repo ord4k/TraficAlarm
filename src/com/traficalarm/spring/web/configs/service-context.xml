@@ -11,4 +11,8 @@
 	<context:component-scan base-package="com.traficalarm.spring.web.service">
 	</context:component-scan>
 
+	<bean id="dateFormat" class="java.text.SimpleDateFormat">
+		<constructor-arg value="yyyy-MM-dd_HH:mm" />
+	</bean>
+
 </beans>

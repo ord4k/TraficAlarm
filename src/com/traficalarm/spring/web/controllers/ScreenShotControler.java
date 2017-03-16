@@ -1,12 +1,18 @@
 package com.traficalarm.spring.web.controllers;
 
-import org.springframework.beans.BeansException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.websocket.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.traficalarm.spring.web.service.Main;
 
@@ -15,18 +21,43 @@ public class ScreenShotControler {
 
 	private Main screen;
 
+
+	private SimpleDateFormat sdf;
+
+	public SimpleDateFormat getSdf() {
+		return sdf;
+	}
+
+	@Autowired
+	public void setSdf(SimpleDateFormat sdf) {
+		this.sdf = sdf;
+	}
+
 	@Autowired
 	public void setScreenShotService(Main screen) {
 		this.screen = screen;
 	}
 
-	@RequestMapping("/takescreen")
+	@ModelAttribute("timeStampScreen")
+	public String getTimeStamp() {
+		String timeStampScreen = sdf.format(Calendar.getInstance().getTime());
+		return timeStampScreen;
 
-	public String takeScreen() {
-		System.out.println("takescreen invoked");
+	}
+
+	
+
+	@RequestMapping(value = "/takescreen", method = RequestMethod.POST)
+	public String takeScreen(@ModelAttribute("timeStampScreen") String timeStampScreen) {
+		System.out.println("takescreen invoked at " + timeStampScreen);
 		screen.run();
-
 		return "takescreen";
+	}
+
+	@RequestMapping(value = "/getscreen", method = RequestMethod.GET)
+	public String getScreen() {
+		System.out.println("Screen made at is ready to view");
+		return "getscreen";
 	}
 
 }
