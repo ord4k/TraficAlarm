@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 public class Main {
 	
 	private ScreenShotService app;
+	private byte[] screen;
 	
 	
 
@@ -21,11 +22,12 @@ public class Main {
 	}
 
 
-	public void run() {
+	public byte[] run() {
 	String url = "https://www.google.pl/maps/@52.2229326,20.9125834,13z/data=!5m1!1e1";
 	app.setUrlString(url);
 	System.out.println(app.getUrlString());
-	app.getWeb();
+	screen = app.getWeb();
+	return screen;
 	}
 	
 

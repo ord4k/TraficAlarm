@@ -18,42 +18,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.traficalarm.spring.web.service.Main;
 
 @Controller
-@SessionAttributes("last")
+@SessionAttributes({"last","screen"})
 public class ScreenShotControler {
-
-	private Main screen;
-
-
-	private SimpleDateFormat sdf;
-
-	public SimpleDateFormat getSdf() {
-		return sdf;
-	}
-
-	@Autowired
-	public void setSdf(SimpleDateFormat sdf) {
-		this.sdf = sdf;
-	}
-
-	@Autowired
-	public void setScreenShotService(Main screen) {
-		this.screen = screen;
-	}
-
-	@ModelAttribute("timeStampScreen")
-	public String getTimeStamp() {
-		String timeStampScreen = sdf.format(Calendar.getInstance().getTime());
-		return timeStampScreen;
-
-	}
-
 	
+	@Autowired
+	Main screenService;
+	
+	@Autowired
+	SimpleDateFormat sdf;
+
 
 	@RequestMapping(value = "/takescreen", method = RequestMethod.POST)
-	public String takeScreen(@ModelAttribute("timeStampScreen") String timeStampScreen) {
+	public String takeScreen(Model model) {
+		
+		String timeStampScreen = sdf.format(Calendar.getInstance().getTime());
 		System.out.println("takescreen invoked at " + timeStampScreen);
-		//model.addAttribute("timeStampScreen", timeStampScreen);
-		screen.run();
+		//saving screenshot as a byteArray
+		byte[] screen = screenService.run();
+		model.addAttribute("timeStampScreen", timeStampScreen);
+		model.addAttribute("screen", screen);
 		return "takescreen";
 	}
 

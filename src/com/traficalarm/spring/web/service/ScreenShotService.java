@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Service
 public class ScreenShotService {
@@ -16,9 +17,8 @@ public class ScreenShotService {
 	private WebDriver driver;
 	private String url = null;
 	private String screenDir;
+	private byte[] screen;
 
-	@Value("${webcontent.path}")
-	private String webcontentPath;
 
 	// set Webiste URL
 	public String getUrlString() {
@@ -30,39 +30,23 @@ public class ScreenShotService {
 		this.url = url;
 	}
 
-	public void setScreenDir(String screenDir) {
-		this.screenDir = screenDir;
-	}
-
-	public String getScreenDir() {
-		return screenDir;
-	}
-
-	public void getWeb() {
+	public byte[] getWeb() {
 		driver = new ChromeDriver();
 		if (url != null) {
+
 			driver.get(url);
-		
-
-			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-			try {
-				if (screenDir == null) {
-					screenDir = webcontentPath +"/screen.jpg";
-				}
-				FileUtils.copyFile(scrFile, new File(screenDir));
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			// File scrFile = ((TakesScreenshot)
+			// driver).getScreenshotAs(OutputType.FILE);
+			screen = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+			System.out.println("Screen shot has been saved as a byteArray");
+			
+			//close ChromeDriver
 			driver.close();
 			System.out.println("The website has been closed");
-			System.out.println("Screen shot has been saved in: " + screenDir);
-
-			System.out.println(webcontentPath);
 		} else {
 			System.out.println("First set the url for website you want to access!!");
 		}
+		return screen;
 	}
 
 }
