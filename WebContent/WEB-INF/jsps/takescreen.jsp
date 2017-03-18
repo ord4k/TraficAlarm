@@ -16,6 +16,7 @@
 	
 	<form action="${pageContext.request.contextPath}/getscreen"
 		method="get" id="form_get_screenshot">
+		<c:set var="last" scope="session" value="${timeStampScreen}" />
 		<button type="submit">CLick</button>
 	</form>
 

@@ -8,9 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-Here is your screen 
-
-
+Your last screenshot was taken at ${last}
 
 </body>
 </html>

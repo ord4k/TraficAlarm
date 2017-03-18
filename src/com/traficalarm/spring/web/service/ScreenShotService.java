@@ -16,7 +16,6 @@ public class ScreenShotService {
 	private WebDriver driver;
 	private String url = null;
 	private String screenDir;
-	private String timeStamp;
 
 	@Value("${webcontent.path}")
 	private String webcontentPath;
@@ -43,6 +42,7 @@ public class ScreenShotService {
 		driver = new ChromeDriver();
 		if (url != null) {
 			driver.get(url);
+		
 
 			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 			try {

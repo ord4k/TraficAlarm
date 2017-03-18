@@ -12,11 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.traficalarm.spring.web.service.Main;
 
 @Controller
+@SessionAttributes("last")
 public class ScreenShotControler {
 
 	private Main screen;
@@ -50,13 +52,15 @@ public class ScreenShotControler {
 	@RequestMapping(value = "/takescreen", method = RequestMethod.POST)
 	public String takeScreen(@ModelAttribute("timeStampScreen") String timeStampScreen) {
 		System.out.println("takescreen invoked at " + timeStampScreen);
+		//model.addAttribute("timeStampScreen", timeStampScreen);
 		screen.run();
 		return "takescreen";
 	}
 
 	@RequestMapping(value = "/getscreen", method = RequestMethod.GET)
-	public String getScreen() {
-		System.out.println("Screen made at is ready to view");
+	public String getScreen(Model model) {
+		String last = (String) model.asMap().get("last");
+		System.out.println("Screen made at is ready to view " + last);
 		return "getscreen";
 	}
 
