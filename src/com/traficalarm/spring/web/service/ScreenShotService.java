@@ -1,22 +1,18 @@
 package com.traficalarm.spring.web.service;
 
-import java.io.File;
-import java.io.IOException;
-import org.apache.commons.io.FileUtils;
+
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.SessionAttributes;
+
 
 @Service
 public class ScreenShotService {
 
 	private WebDriver driver;
 	private String url = null;
-	private String screenDir;
 	private byte[] screen;
 
 
