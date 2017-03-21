@@ -7,8 +7,11 @@
 
 	<context:property-placeholder
 		location="classpath:com/traficalarm/spring/web/resources/traficalarm.properties" />
+
+
 	<context:annotation-config></context:annotation-config>
-	<context:component-scan base-package="com.traficalarm.spring.web.service">
+	<context:component-scan base-package="
+		com.traficalarm.spring.web.service ">
 	</context:component-scan>
 
 	<bean id="dateFormat" class="java.text.SimpleDateFormat">
